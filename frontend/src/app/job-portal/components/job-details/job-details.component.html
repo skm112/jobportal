@@ -1,0 +1,30 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col" *ngFor="let obj of arrTable">
+      <div class="card">
+        <div class="card-header">
+          <strong>{{ Jobtitle }} Details</strong>
+        </div>
+        <div class="card-body">
+          <strong>PostedBy</strong>&nbsp;&nbsp; {{ obj.username }}<br /><br />
+          <strong>JobType</strong>&nbsp;&nbsp; {{ obj.Jobtype }}<br /><br />
+          <strong>Price</strong>&nbsp;&nbsp; {{ obj.Jobprice | currency }}
+          <br /><br />
+          <strong>PostedOn</strong>&nbsp;&nbsp; {{ obj.Job_Posted_Date | date
+          }}<br /><br />
+          <strong>JobStartsDate</strong>&nbsp;&nbsp;
+          {{ obj.Job_Start_Date | date }}<br /><br />
+          <strong>JobEndDate</strong>&nbsp;&nbsp; {{ obj.Job_Closed_Date | date
+          }}<br /><br />
+          <strong>PersonRequired</strong>&nbsp;&nbsp;
+          {{ obj.Job_no_of_freelancer_required }}<br /><br />
+          <strong>skillsRequired</strong>&nbsp;&nbsp; {{ obj.skills
+          }}<br /><br />
+          <strong>Jobdescription</strong><br />
+          <div [innerHTML]="obj.description"></div>
+          <br />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

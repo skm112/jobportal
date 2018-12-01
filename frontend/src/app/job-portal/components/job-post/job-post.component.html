@@ -1,0 +1,228 @@
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header"><strong>JobPost</strong></div>
+    <div class="card-body">
+      <!-- @formStarts -->
+      <form [formGroup]="inputForm" (ngSubmit)="onSubmit()">
+        <!-- @jobtitle -->
+        <div class="col-md-6 form-group">
+          <label for="Jobtitle">Job Title</label>
+          <input
+            type="text"
+            formControlName="Jobtitle"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f.Jobtitle.errors }"
+          />
+          <div *ngIf="submitted && f.Jobtitle.errors" class="invalid-feedback">
+            <div *ngIf="f.Jobtitle.errors.required">Jobtitle is required</div>
+          </div>
+        </div>
+
+        <!-- @jobtype -->
+        <div class="col-md-6 form-group">
+          <label for="Jobtype">Jobtype</label><br />
+          <div>
+            <input
+              type="radio"
+              formControlName="Jobtype"
+              value="hourly"
+              [checked]="true"
+            />
+            <label for="hourly">hourly</label>
+          </div>
+          <div>
+            <input type="radio" formControlName="Jobtype" value="fixed" />
+            <label for="fixed">fixed</label>
+          </div>
+          <div>
+            <input type="radio" formControlName="Jobtype" value="full-time" />
+            <label for="full-time">full-time</label>
+          </div>
+        </div>
+
+        <!-- @jobprice -->
+        <div class="col-md-6 form-group">
+          <label for="Jobprice">Jobprice</label>
+          <input
+            currencyMask
+            formControlName="Jobprice"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f.Jobprice.errors }"
+          />
+          <div *ngIf="submitted && f.Jobprice.errors" class="invalid-feedback">
+            <div *ngIf="f.Jobprice.errors.required">Jobprice is required</div>
+          </div>
+        </div>
+
+        <!-- @skills -->
+        <div class="col-md-6 form-group">
+          <label for="skills">skill</label>
+          <ng-select
+            placeholder="Select skills or add skills"
+            [multiple]="true"
+            [items]="skills"
+            bindLabel="skill"
+            bindValue="id"
+            [addTag]="addCustomSkills"
+            formControlName="skills"
+            ng-select="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f.skills.errors }"
+          >
+          </ng-select>
+          <div
+            *ngIf="submitted && f.skills.errors"
+            ng-select="invalid-feedback"
+          >
+            <div *ngIf="f.skills.errors.required">Atleast 1 skill required</div>
+          </div>
+        </div>
+        <!-- @end -->
+
+        <!-- @personrequired -->
+        <div class="col-md-6 form-group">
+          <label for="Job_no_of_freelancer_required"
+            >No. of person required</label
+          >
+          <input
+            type="number"
+            formControlName="Job_no_of_freelancer_required"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid': submitted && f.Job_no_of_freelancer_required.errors
+            }"
+          />
+          <div
+            *ngIf="submitted && f.Job_no_of_freelancer_required.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="f.Job_no_of_freelancer_required.errors.required">
+              number required
+            </div>
+          </div>
+        </div>
+
+        <!-- @jobvisibility -->
+        <div class="col-md-6 form-group">
+          <label for="Job_visibility">JobVisibility</label><br />
+          <div>
+            <input
+              type="radio"
+              formControlName="Job_visibility"
+              value="public"
+              [checked]="true"
+            />
+            <label for="public">public</label>
+          </div>
+          <div>
+            <input
+              type="radio"
+              formControlName="Job_visibility"
+              value="private"
+            />
+            <label for="private">private</label>
+          </div>
+        </div>
+
+        <!-- @jobstartdate -->
+        <div class="form-group">
+          <div class="col-xs-12 col-12 col-sm-6 col-md-4 form-group">
+            <label for="Job_Start_Date">JobStart</label><br />
+            <input
+              type="text"
+              class="form-control"
+              placeholder="JobStart"
+              bsDatepicker
+              placement="right"
+              formControlName="Job_Start_Date"
+              [ngClass]="{
+                'is-invalid': submitted && f.Job_Start_Date.errors
+              }"
+              [minDate]="minDate"
+            />
+            <div
+              *ngIf="submitted && f.Job_Start_Date.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.Job_Start_Date.errors.required">
+                date is required
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- @jobclosedate -->
+        <div class="form-group">
+          <div class="col-xs-12 col-12 col-sm-6 col-md-4 form-group">
+            <label for="Job_Closed_Date">JobClosed</label><br />
+            <input
+              type="text"
+              class="form-control"
+              placeholder="JobClosed"
+              bsDatepicker
+              placement="right"
+              formControlName="Job_Closed_Date"
+              [ngClass]="{
+                'is-invalid': submitted && f.Job_Closed_Date.errors
+              }"
+              [maxDate]="maxDate"
+            />
+            <div
+              *ngIf="submitted && f.Job_Closed_Date.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.Job_Closed_Date.errors.required">
+                date is required
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- @docUploads -->
+        <div class="col-md-6 form-group">
+          <label for="avtar">Upload Docs</label>
+          <div
+            formArrayName="items"
+            *ngFor="let item of inputForm.get('items').controls; let i = index"
+          >
+            <div [formGroupName]="i">
+              <input
+                type="text"
+                formControlName="name"
+                id="name{{i}}"
+                placeholder="Item name"
+              />
+              <input
+                type="file"
+                (change)="onfileChange($event, i)"
+                formControlName="filename"
+              />
+            </div>
+          </div>
+          <a type="button" (click)="addItem()">Add</a>
+        </div>
+
+        <!-- @description -->
+        <div class="col-md-6 form-group">
+          <label for="description">description(Optional)</label>
+          <app-ngx-editor
+            [placeholder]="'Enter text here...'"
+            height="100px"
+            [spellcheck]="true"
+            formControlName="description"
+          ></app-ngx-editor>
+        </div>
+
+        <div class="form-group">
+          <button [disabled]="loading" type="submit" class="btn btn-primary">
+            Save
+          </button>
+          <img
+            *ngIf="loading"
+            src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+          />
+          <a (click)="cancel()" class="btn btn-link">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

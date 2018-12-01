@@ -1,0 +1,18 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-sm-6 col-md-4" *ngFor="let obj of arrCard">
+      <div class="card">
+        <div class="card-header">
+          Job Title: <strong>{{obj.job_name}}</strong>
+        </div>
+        <div class="card-body">
+          <div [innerHTML]="obj.users[0].description"></div>
+          <br>
+          <strong>Price</strong><br>
+          {{obj.users[0].price| currency}} {{obj.users[0].jobtype}}<br>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

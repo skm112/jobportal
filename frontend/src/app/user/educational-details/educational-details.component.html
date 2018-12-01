@@ -1,0 +1,166 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Institution Name</th>
+      <th>City</th>
+      <th>State</th>
+      <th>Country</th>
+      <th>pincode</th>
+      <th>Qualification</th>
+      <th>Stream</th>
+      <th>Website</th>
+      <th>Time</th>
+      <th>Discription</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let obj of arrEdu">
+      <td>{{obj.name}}</td>
+      <td>{{obj.school_location.city}}</td>
+      <td>{{obj.school_location.state}}</td>
+      <td>{{obj.school_location.country}}</td>
+      <td>{{obj.school_location.pincode}}</td>
+      <td>{{obj.qualification}}</td>
+      <td>{{obj.area_of_study}}</td>
+      <td>{{obj.web_page}}</td>
+      <td>{{obj.period_from|date: "dd-MMM-yyyy"}} -- {{obj.period_to|date: "dd-MMM-yyyy"}} </td>
+      <td>{{obj.description}}</td>
+      <td>
+        <a (click)="edit(obj)">Edit</a>|
+        <a (click)="delete(obj)">Delete</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+<div *ngIf="show">
+
+
+  <form [formGroup]="educationForm" (ngSubmit)="onSubmit()">
+
+
+
+    <!-- @Institution Name -->
+    <div class="form-group">
+      <label for="name">Institution Name</label>
+      <input type="text" formControlName="name" [typeahead]="edulist" typeaheadOptionField="name"
+        [typeaheadOptionsLimit]="7" [typeaheadOptionsInScrollableView]="5" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+      <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+        <div *ngIf="f.name.errors.required">institution name is required</div>
+      </div>
+    </div>
+    <!-- @end -->
+    <div formGroupName="school_location">
+      <!-- @country -->
+      <div class="form-group">
+        <label for="country">Country</label>
+        <input type="text" formControlName="country" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.school_location.controls.country.errors }" />
+        <div *ngIf="submitted && f.school_location.controls.country.errors" class="invalid-feedback">
+          <div *ngIf="f.school_location.controls.country.errors.required">country is required</div>
+        </div>
+      </div>
+      <!-- @end -->
+
+      <!-- @state -->
+      <div class="form-group">
+        <label for="state">state</label>
+        <input type="text" formControlName="state" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.school_location.controls.state.errors }" />
+        <div *ngIf="submitted && f.school_location.controls.state.errors" class="invalid-feedback">
+          <div *ngIf="f.school_location.controls.state.errors.required">state is required</div>
+        </div>
+      </div>
+      <!-- @end -->
+
+      <!-- @city -->
+      <div class="form-group">
+        <label for="city">City</label>
+        <input type="text" formControlName="city" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.school_location.controls.city.errors }" />
+        <div *ngIf="submitted && f.school_location.controls.city.errors" class="invalid-feedback">
+          <div *ngIf="f.school_location.controls.city.errors.required">city is required</div>
+        </div>
+      </div>
+      <!-- @end -->
+
+      <!-- @pincode -->
+      <div class="form-group">
+        <label for="pincode">pincode</label>
+        <input type="text" formControlName="pincode" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.school_location.controls.pincode.errors }" />
+        <div *ngIf="submitted && f.school_location.controls.pincode.errors" class="invalid-feedback">
+          <div *ngIf="f.school_location.controls.pincode.errors.required">pincode is required</div>
+        </div>
+      </div>
+      <!-- @end -->
+    </div>
+    <!-- @qualification -->
+    <div class="form-group">
+      <label for="qualification">qualification</label>
+      <input type="text" formControlName="qualification" [typeahead]="degree" typeaheadOptionField="name"
+        [typeaheadOptionsInScrollableView]="7" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.qualification.errors }" />
+      <div *ngIf="submitted && f.qualification.errors" class="invalid-feedback">
+        <div *ngIf="f.qualification.errors.required">qualification is required</div>
+      </div>
+    </div>
+    <!-- @end -->
+
+    <!-- @area_of_study -->
+    <div class="form-group">
+      <label for="area_of_study">Stream</label>
+      <input type="text" formControlName="area_of_study" [typeahead]="streamlist" typeaheadOptionField="name"
+        [typeaheadOptionsLimit]="7" [typeaheadOptionsInScrollableView]="5" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.area_of_study.errors }" />
+      <div *ngIf="submitted && f.area_of_study.errors" class="invalid-feedback">
+        <div *ngIf="f.area_of_study.errors.required">stream is required</div>
+      </div>
+    </div>
+    <!-- @end -->
+
+
+
+
+    <!-- @description -->
+    <div class="form-group">
+      <label for="description">description (Optional)</label>
+      <textarea type="text" cols="15" rows="5" formControlName="description" class="form-control"></textarea>
+    </div>
+    <!-- @end -->
+
+    <!-- @web_page -->
+    <div class="form-group">
+      <label for="web_page">Website (Optional)</label>
+      <input type="text" formControlName="web_page" class="form-control" />
+    </div>
+    <!-- @end -->
+
+    <!-- @Date -->
+    <div class="row">
+      <!-- @from -->
+      <div class="col-xs-12 col-12 col-sm-6 col-md-4 form-group">
+        <input type="text" class="form-control" placeholder="Datepicker" bsDatepicker formControlName="period_from"
+          [ngClass]="{ 'is-invalid': submitted && f.period_from.errors }" [bsConfig]="{ dateInputFormat: 'DD MMMM YYYY,h:mm:ss a'}" />
+        <div *ngIf="submitted && f.period_from.errors" class="invalid-feedback">
+          <div *ngIf="f.period_from.errors.required">date is required</div>
+        </div>
+      </div>
+      <!-- @end -->
+      <!-- @to -->
+
+      <div class="col-xs-12 col-12 col-sm-6 col-md-4 form-group">
+        <input type="text" class="form-control" placeholder="Datepicker" bsDatepicker formControlName="period_to"
+          [ngClass]="{ 'is-invalid': submitted && f.period_to.errors }" [bsConfig]="{ dateInputFormat: 'DD MMMM YYYY,h:mm:ss a' }" />
+        <div *ngIf="submitted && f.period_to.errors" class="invalid-feedback">
+          <div *ngIf="f.period_to.errors.required">date is required</div>
+        </div>
+      </div>
+
+    </div>
+    <!-- @end to -->
+    <!-- end -->
+    <div class="form-group">
+      <button class="btn btn-primary">Save</button>
+      <a class="btn btn-link" (click)="cancel()">Cancel</a>
+    </div>
+  </form>
+
+</div>

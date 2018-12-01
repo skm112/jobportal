@@ -1,0 +1,40 @@
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header"><i class="fa fa-align-justify"></i>All Jobs</div>
+    <div class="card-body">
+      <input type="text" [(ngModel)]="pagesearch" placeholder="search for jobs" />
+      <input type="button" (click)="search()" value="Search" />&nbsp;
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Jobtitle</th>
+            <th>PostedBy</th>
+            <th>Details</th>
+            <th>Apply</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let obj of arrTable">
+            <td>{{ obj.Jobtitle }}</td>
+            <td>{{ obj.username }}</td>
+            <td>
+              <a routerLink="/jobportal/jobdetails/{{obj._id}}/{{obj.Jobtitle}}">Details</a>
+            </td>
+            <td>
+              <a routerLink="/user/applyforjob/{{obj._id}}">Apply</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <ul class="pagination">
+        <li class="row page-item active">
+          <a class="page-link" (click)="getdata(pagesearch, pageno, pagesize)" *ngFor="let pageno of arrPage">
+            {{ pageno }}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

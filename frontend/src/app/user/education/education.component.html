@@ -1,0 +1,152 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-sm-8">
+      <div class="card">
+        <div class="card-header">
+          <strong>Education</strong>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-12">
+              <!--  -->
+              <form [formGroup]="educationForm" (ngSubmit)="onSubmit()">
+
+                <!-- @Institution Name -->
+                <div class="form-group">
+                  <label for="name">Institution Name</label>
+                  <input type="text" formControlName="name" [typeahead]="edulist" typeaheadOptionField="name"
+                    [typeaheadOptionsLimit]="7" [typeaheadOptionsInScrollableView]="5" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+                  <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                    <div *ngIf="f.name.errors.required">institution name is required</div>
+                  </div>
+                </div>
+                <!-- @end -->
+
+                <!-- @country -->
+                <div class="form-group">
+                  <label for="country">Country</label>
+                  <input type="text" formControlName="country" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.country.errors }" />
+                  <div *ngIf="submitted && f.country.errors" class="invalid-feedback">
+                    <div *ngIf="f.country.errors.required">country is required</div>
+                  </div>
+                </div>
+                <!-- @end -->
+
+                <!-- @state -->
+                <div class="form-group">
+                  <label for="state">state</label>
+                  <input type="text" formControlName="state" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.state.errors }" />
+                  <div *ngIf="submitted && f.state.errors" class="invalid-feedback">
+                    <div *ngIf="f.state.errors.required">state is required</div>
+                  </div>
+                </div>
+                <!-- @end -->
+
+                <!-- @city -->
+                <div class="form-group">
+                  <label for="city">City</label>
+                  <input type="text" formControlName="city" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.city.errors }" />
+                  <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
+                    <div *ngIf="f.city.errors.required">city is required</div>
+                  </div>
+                </div>
+                <!-- @end -->
+
+                <!-- @pincode -->
+                <div class="form-group">
+                  <label for="pincode">pincode</label>
+                  <input type="text" formControlName="pincode" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.pincode.errors }" />
+                  <div *ngIf="submitted && f.pincode.errors" class="invalid-feedback">
+                    <div *ngIf="f.pincode.errors.required">pincode is required</div>
+                  </div>
+                </div>
+                <!-- @end -->
+
+                <!-- @qualification -->
+                <div class="form-group">
+                  <label for="qualification">qualification</label>
+                  <input type="text" formControlName="qualification" [typeahead]="degree" typeaheadOptionField="name"
+                    [typeaheadOptionsInScrollableView]="7" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.qualification.errors }" />
+                  <div *ngIf="submitted && f.qualification.errors" class="invalid-feedback">
+                    <div *ngIf="f.qualification.errors.required">qualification is required</div>
+                  </div>
+                </div>
+                <!-- @end -->
+
+                <!-- @area_of_study -->
+                <div class="form-group">
+                  <label for="area_of_study">Stream</label>
+                  <input type="text" formControlName="area_of_study" [typeahead]="streamlist" typeaheadOptionField="name"
+                    [typeaheadOptionsLimit]="7" [typeaheadOptionsInScrollableView]="5" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.area_of_study.errors }" />
+                  <div *ngIf="submitted && f.area_of_study.errors" class="invalid-feedback">
+                    <div *ngIf="f.area_of_study.errors.required">stream is required</div>
+                  </div>
+                </div>
+                <!-- @end -->
+
+
+
+
+                <!-- @description -->
+                <div class="form-group">
+                  <label for="description">description (Optional)</label>
+                  <textarea type="text" cols="15" rows="5" formControlName="description" class="form-control"></textarea>
+                </div>
+                <!-- @end -->
+
+                <!-- @web_page -->
+                <div class="form-group">
+                  <label for="web_page">Website (Optional)</label>
+                  <input type="text" formControlName="web_page" class="form-control" />
+                </div>
+                <!-- @end -->
+
+                <!-- @Date -->
+                <div class="row">
+                  <!-- @from -->
+                  <div class="col-xs-12 col-12 col-sm-6 col-md-4 form-group">
+                    <input type="text" class="form-control" placeholder="Datepicker" bsDatepicker formControlName="period_from"
+                      [ngClass]="{ 'is-invalid': submitted && f.period_from.errors }" [minDate]="minDate" />
+                    <div *ngIf="submitted && f.period_from.errors" class="invalid-feedback">
+                      <div *ngIf="f.period_from.errors.required">date is required</div>
+                    </div>
+                  </div>
+                  <!-- @end -->
+                  <!-- @to -->
+
+                  <div class="col-xs-12 col-12 col-sm-6 col-md-4 form-group">
+                    <input type="text" class="form-control" placeholder="Datepicker" bsDatepicker formControlName="period_to"
+                      [ngClass]="{ 'is-invalid': submitted && f.period_to.errors }" [maxDate]="maxDate" />
+                    <div *ngIf="submitted && f.period_to.errors" class="invalid-feedback">
+                      <div *ngIf="f.period_to.errors.required">date is required</div>
+                    </div>
+                  </div>
+
+                </div>
+                <!-- @end to -->
+                <!-- end -->
+                <div class="form-group">
+                  <button class="btn btn-primary">Save</button>
+                  <a class="btn btn-link">Cancel</a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- <div class="animated fadeIn">
+  <div class="row">
+    <div class="col-sm-8">
+      <div class="card">
+        <div class="card-header">
+          <strong>Education</strong>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-12"> -->

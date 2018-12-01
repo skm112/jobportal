@@ -1,0 +1,99 @@
+<h3>Profile</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Profile Pic</th>
+      <th>Name</th>
+      <th>Username</th>
+      <th>Mobile No</th>
+      <th>Email ID</th>
+      <th>Password</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let obj of arrUser">
+      <td><img height="50px" width="50px" src="{{obj.image}}"></td>
+      <td>{{obj.name}}</td>
+      <td>{{obj.username}}</td>
+      <td>{{obj.mobile}}</td>
+      <td>{{obj.email}}</td>
+      <td><a routerLink="/user/resetpass">Reset</a></td>
+      <td>
+        <a (click)="edit(obj)">Edit</a>|
+        <a (click)="delete(obj)">Delete</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+<div *ngIf="show">
+  <table>
+    <tr>
+      <td>
+        <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+
+          <!-- @name -->
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+            <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+              <div *ngIf="f.name.errors.required">name is required</div>
+            </div>
+          </div>
+          <!-- @end -->
+
+          <!-- @image -->
+          <div class="form-group">
+            <label for="image">Profile Pic</label>
+            <input type="file" (change)='onfileChange($event)' class="form-control" formControlName="filename" />
+          </div>
+          <!-- @end -->
+
+
+
+          <!-- @email -->
+          <div class="form-group">
+            <label for="email">email</label>
+            <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+              <div *ngIf="f.email.errors.required">email is required</div>
+              <div *ngIf="f.email.errors.pattern">invalid email</div>
+            </div>
+          </div>
+          <!--@ end -->
+
+          <!-- @mobile -->
+          <div class="form-group">
+            <label for="mobile">Mobile No</label>
+            <input type="text" formControlName="mobile" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.mobile.errors }" />
+            <div *ngIf="submitted && f.mobile.errors" class="invalid-feedback">
+              <div *ngIf="f.mobile.errors.required">mobile number is required</div>
+              <div *ngIf="f.mobile.errors.pattern">please enter 10 digit mobile number</div>
+            </div>
+          </div>
+          <!-- @end -->
+
+          <div class="form-group">
+            <button [disabled]="loading" class="btn btn-primary">Update</button>
+            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+            <a (click)="cancel()" class="btn btn-link">Cancel</a>
+          </div>
+        </form>
+      </td>
+    </tr>
+  </table>
+</div>
+<br>
+<div>
+  <h4>Education Details</h4>
+  <app-educational-details></app-educational-details><button (click)="addEducation()">
+    Add More Education
+  </button>
+</div><br>
+<div>
+  <h4>Applied Jobs</h4>
+  <app-showappliedjobs></app-showappliedjobs>
+</div>

@@ -1,0 +1,84 @@
+<!-- <h3>{{job_name}}</h3> -->
+
+
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          Apply for <strong>{{Jobtitle}}</strong>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-12">
+              <form [formGroup]="inputForm" (ngSubmit)="onSubmit()">
+
+                <!-- @description -->
+                <div class="form-group">
+                  <label for="description">description</label>
+                  <app-ngx-editor [placeholder]="'Enter description here...'" height="200px" [spellcheck]="true"
+                    formControlName="description" [ngClass]="{ 'is-invalid': submitted && f.description.errors }"></app-ngx-editor>
+                  <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                    <div *ngIf="f.description.errors.required">description <strong>required</strong></div>
+                  </div>
+                </div>
+                <!-- @end -->
+
+                <!-- @Rates -->
+                <div class="form-group">
+                  <strong>Jobtype: </strong>{{Jobtype}}</div>
+
+                <!-- <div class="form-group">
+                  <label for="jobtype">Jobtype</label><br>
+                  <input type="radio" formControlName="jobtype" value="hourly" [ngClass]="{ 'is-invalid': submitted && f.jobtype.errors }" />
+                  Hourly
+                  <input type="radio" formControlName="jobtype" value="fixed" [ngClass]="{ 'is-invalid': submitted && f.jobtype.errors }" />
+                  fixed
+                  <div *ngIf="submitted && f.jobtype.errors" class="invalid-feedback">
+                    <div *ngIf="f.jobtype.errors.required">Jobtype is required</div>
+                  </div>
+                </div> -->
+                <!-- @end -->
+
+                <!-- @Price -->
+                <div class="form-group">
+                  <label for="price">Price</label>
+                  <input currencyMask type="text" formControlName="price" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.price.errors }" />
+                  <div *ngIf="submitted && f.price.errors" class="invalid-feedback">
+                    <div *ngIf="f.price.errors.required">price required</div>
+                  </div>
+                </div>
+                <!-- @end -->
+                <!-- @image -->
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="avtar">Upload Docs</label>
+                      <div formArrayName="items" *ngFor="let item of inputForm.get('items').controls; let i = index;">
+                        <div [formGroupName]="i">
+                          <input type="text" class="form-control" formControlName="name" id="name{{i}}" placeholder="Item name">
+                          <input type="file" class="form-control" (change)='onfileChange($event,i)' formControlName="filename" />
+
+                        </div>
+                      </div>
+                    </div>
+                    <a type="button" class="btn btn-dark" (click)="addItem()">Add</a>
+                  </div>
+                </div>
+
+                <!-- @end -->
+
+
+                <!-- end -->
+                <div class="form-group">
+                  <button class="btn btn-primary px-4">Save</button>&nbsp;
+                  <a type="button" class="btn btn-Secondary px-4">Cancel</a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
